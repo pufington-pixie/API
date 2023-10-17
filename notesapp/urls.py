@@ -16,7 +16,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from notes.views import NoteViewSet
+from django.conf.urls import url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    url(r'^note$', NoteViewSet.as_view(
+        {
+            'get': 'retrieve',
+            'post': 'create',
+            'put': 'update',
+            'patch': 'partial_update',
+            'delete': 'destroy'
+        }
+    )),
+    url(r'^note/all$', NoteViewSet.as_view(
+        {
+            'get': 'list',
+        }
+    )),
 ]
